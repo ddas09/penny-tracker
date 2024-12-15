@@ -25,28 +25,60 @@ namespace PennyTracker.Backend.Services
                 transactions = csv.GetRecords<Transaction>().ToList();
             }
 
-            var totalExpenses = transactions.Sum(t => t.Amount);
+            // Separate transactions into income and expenses
+            var incomeTransactions = transactions.Where(t => t.Amount > 0).ToList();
+            var expenseTransactions = transactions.Where(t => t.Amount < 0).ToList();
 
-            var categoryWiseExpenses = transactions
+            // Calculate total expenses
+            var totalExpenses = expenseTransactions.Sum(t => Math.Abs(t.Amount));
+
+            // Calculate total incomes
+            var totalIncomes = incomeTransactions.Sum(t => t.Amount);
+
+            // Group and calculate category-wise expenses (using ExpenseCategory enum)
+            var categoryWiseExpenses = expenseTransactions
+                .GroupBy(t => t.Category)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.Sum(t => Math.Abs(t.Amount))
+                );
+
+            // Group and calculate category-wise incomes (using IncomeCategory enum)
+            var categoryWiseIncomes = incomeTransactions
                 .GroupBy(t => t.Category)
                 .ToDictionary(
                     g => g.Key,
                     g => g.Sum(t => t.Amount)
                 );
 
-            var monthlyTrend = transactions
-            .GroupBy(t => (Month)t.Date.Month)
-            .OrderBy(g => g.Key)
-            .ToDictionary(
-                g => g.Key,
-                g => g.Sum(t => t.Amount)
-            );
+            // Group and calculate monthly expenses
+            var monthlyExpenses = expenseTransactions
+                .GroupBy(t => (Month)t.Date.Month)
+                .OrderBy(g => g.Key)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.Sum(t => Math.Abs(t.Amount))
+                );
 
+            // Group and calculate monthly incomes
+            var monthlyIncomes = incomeTransactions
+                .GroupBy(t => (Month)t.Date.Month)
+                .OrderBy(g => g.Key)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.Sum(t => t.Amount)
+                );
+
+            // Return the aggregated insights
             return new ExpenseInsight
             {
+                Transactions = transactions,
                 TotalExpenses = totalExpenses,
+                TotalIncomes = totalIncomes,
                 CategoryWiseExpenses = categoryWiseExpenses,
-                MonthlyTrend = monthlyTrend
+                CategoryWiseIncomes = categoryWiseIncomes,
+                MonthlyExpenses = monthlyExpenses,
+                MonthlyIncomes = monthlyIncomes
             };
         }
     }
