@@ -10,19 +10,19 @@ A simple expense tracking app to manage, analyze, and gain insights into your sp
 Here are some screenshots of the app in action:
 
 - **Dashboard:**  
-  ![Dashboard Screenshot](/screenshots/Dashboard.png)
+  ![Dashboard Screenshot](./Screenshots/Dashboard.png)
 
 - **Transactions:**  
-  ![Transactions Screenshot](/screenshots/TransactionList.png)
+  ![Transactions Screenshot](./Screenshots/TransactionList.png)
 
 - **Category Wise Data:**  
-  ![Category Wise Data Screenshot](/screenshots/CategoryWiseData.png)
+  ![Category Wise Data Screenshot](./Screenshots/CategoryWiseData.png)
 
 - **Transaction Trend:**  
-  ![Transaction Trend Screenshot](/screenshots/TransactionTrend.png)
+  ![Transaction Trend Screenshot](./Screenshots/TransactionTrend.png)
 
 - **Compare Transaction Trends:**  
-  ![Compare Transaction Trends Screenshot](/screenshots/CompareTrend.png)
+  ![Compare Transaction Trends Screenshot](./Screenshots/CompareTrend.png)
 
 ## Tech Stack
 
@@ -51,6 +51,7 @@ ExpenseInsightsDashboard/
 │   └── package.json           # Frontend dependencies
 │
 ├── README.md                  # Project documentation
+├── Screenshots                # Project screenshots
 ```
 
 # Getting Started
