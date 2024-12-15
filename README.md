@@ -67,13 +67,13 @@ Ensure you have the following installed on your system:
 1. Clone the repository:
 
 ```bash
-git clone <repository_url>
-cd ExpenseInsightsDashboard/PennyTracker.Backend
+git clone https://github.com/ddas09/penny-tracker.git
 ```
 
 2. Restore the backend dependencies:
     
 ```bash
+cd ExpenseInsightsDashboard/PennyTracker.Backend
 dotnet restore
 ```
 
